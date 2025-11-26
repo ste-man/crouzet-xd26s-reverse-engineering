@@ -1,0 +1,13 @@
+Read fusebits:
+avrdude -v -c avrispmkII -p m128 -B 125kHz -U efuse:r:-:h -U hfuse:r:-:h -U lfuse:r:-:h
+
+Result:
+efuse: 0xff
+hfuse: 0x8a
+lfuse: 0x1f
+
+Fuse bits, disable JTAG (utilize ID..IG), enable SPI programming.
+avrdude -v -c atmelice_isp -p m128 -B 125kHz -U lfuse:w:0x1f:m -U hfuse:w:0xca:m -U efuse:w:0xff:m
+
+Fuse bits, enable JTAG, enable SPI programming
+avrdude -v -c atmelice_isp -p m128 -B 125kHz -U lfuse:w:0x1f:m -U hfuse:w:0x8a:m -U efuse:w:0xff:m 
