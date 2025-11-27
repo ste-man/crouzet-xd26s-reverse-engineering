@@ -4,7 +4,7 @@
 A Crouzet Millenium 3 XD26S (not the newer "SMART" version) PLC was left over from discontinued industrial equipment and given to me as a gift. The hardware seemed to be well designed and manufactured, it has a potent 4x18 character LCD display, 6 user interface buttons and a capable 8-bit ATMEL ATmega128-AU microcontroller so I decided to reverse engineer it in order to program the microcontroller directly instead of using the manufacturers automation software.
 
 
-# TLDR, can this device be useful for my general hobby project?
+## TLDR, can this device be useful for my general hobby project?
 
 Yes. The ATmega128 fuse bits on my device was by default set to e:0xff h:0x8a l:0x1f which allows for JTAG communication. XD26S PCB (hardware) also supports JTAG (there are additional resistors installed on the 4 JTAG signal lines) and both JTAG + ICSP SPI pins can be accessed via test/solder points on backside of main PCB. Take a look at the electrical schematics and photos of PCB.
 

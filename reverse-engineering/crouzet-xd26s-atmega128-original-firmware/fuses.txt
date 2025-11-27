@@ -1,0 +1,7 @@
+Command to read fusebits:
+avrdude -v -c dragon_jtag -p m128 -B 125kHz -U efuse:r:-:h -U hfuse:r:-:h -U lfuse:r:-:h
+
+Result:
+efuse: 0xff
+hfuse: 0xaa
+lfuse: 0x1f
