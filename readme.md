@@ -83,7 +83,7 @@ The LCD controller seems to have 2 distinct "modes". Some messages are interpret
 | Byte 3: | Seems to be part of control message. | Functionality of bit 0..3 resembles Hitatchi HD44780U LCD controller. See image below.  |
 
 Correlation between Hitatchi HD44780U LCD controller and SPI packet byte 2 and 3 in CHARACTER mode:
-![hd44780u-vs-lcd-spi-commnuication](reverse-engineering/communication-spi/lcd-info/hd44780u-table-6-modified)
+![hd44780u-vs-lcd-spi-commnuication](reverse-engineering/communication-spi/lcd-info/hd44780u-table-6-modified/hd44780u_table-6-modified.svg)
 
 
 #### SPI control messages
