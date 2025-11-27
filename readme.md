@@ -2,18 +2,19 @@
 # Introduction and history
 
 A Crouzet Millenium 3 XD26S (not the newer "SMART" version) PLC was left over from discontinued industrial equipment and given to me as a gift. The hardware seemed to be well designed and manufactured, it has a potent 4x18 character LCD display, 6 user interface buttons and a capable 8-bit ATMEL ATmega128-AU microcontroller so I decided to reverse engineer the device in order to program the microcontroller directly instead of using the manufacturers automation software.
+![]()
 
 
 ## TLDR, can this device be useful for my general hobby project?
 
-Yes. The ATmega128 fuse bits on my device was by default set to e:0xff h:0x8a l:0x1f which allows for JTAG communication. XD26S PCB (hardware) also supports JTAG (there are additional resistors installed on the 4 JTAG signal lines) and both JTAG + ICSP SPI pins can be accessed via test/solder points on backside of main PCB. Take a look at the electrical schematics and photos of PCB.
+Yes. The ATmega128 fuse bits on my device was by default set to e:0xff h:0x8a l:0x1f which allows for JTAG communication. XD26S PCB (hardware) also supports JTAG (there are additional resistors installed on the 4 JTAG signal lines) and both JTAG + ICSP SPI pins can be accessed via test/solder points on backside of main PCB. Take a look at the [electrical schematics](https://github.com/ste-man/crouzet-xd26s-reverse-engineering/blob/main/reverse-engineering/ecad/crouzet-xd26s-schematic/crouzet-xd26s_schematic.pdf) and photos of PCB [back](https://github.com/ste-man/crouzet-xd26s-reverse-engineering/blob/main/reverse-engineering/ecad/pcb-reference-photos/main-pcb-back_with-references.pdf) and [front](https://github.com/ste-man/crouzet-xd26s-reverse-engineering/blob/main/reverse-engineering/ecad/pcb-reference-photos/main-pcb-front_with-references.pdf).
 
 
 # Crouzet Millenium 3 XD26S device information
 
 ## Electrical schematics
 
-Take a look at the reverse engineered [electrical schematics](https://github.com/ste-man/crouzet-xd26s-reverse-engineering/blob/main/reverse-engineering/ecad/crouzet-xd26s-schematic/crouzet-xd26s_schematic.pdf) for a good overview of device capabilities. Min circuit board does not have silkscreen and is missing reference designators. New reference designators has been created by me. See related annotated photos of circuit board for reference. Electrical schematics have been created with Kicad 9.0.** (<https://www.kicad.org/>).
+Take a look at the reverse engineered [electrical schematics](https://github.com/ste-man/crouzet-xd26s-reverse-engineering/blob/main/reverse-engineering/ecad/crouzet-xd26s-schematic/crouzet-xd26s_schematic.pdf) for a good overview of device capabilities. Min circuit board does not have silkscreen and is missing reference designators. New reference designators has been created by me. See related [annotated photos](https://github.com/ste-man/crouzet-xd26s-reverse-engineering/tree/main/reverse-engineering/ecad/pcb-reference-photos) of circuit board for reference. Electrical schematics have been created with Kicad 9.0.** (<https://www.kicad.org/>).
 
 
 ## Main circuit board microcontroller ("main MCU")
@@ -23,13 +24,13 @@ The main circuit board has an 8-bit ATMEL ATmega128-AU microcontroller (<https:/
 
 ### Program demo
 
-A simple demo program has been created in order to provide a very quick way of testing device hardware. A more serious solution would be to create a software library suitable for this device and more Crouzet devices in same model series with interface to display, buttons, I/O and real time clock etc. See video of device operating with new demo software: <https://www.youtube.com/watch?v=avJbvae7_Jc>.
+A simple ATmega 128 demo program has been created in order to provide a very quick way of testing device hardware. A more serious solution would be to create a software library suitable for this device and more Crouzet devices in same model series with interface to display, buttons, I/O and real time clock etc. See video of device operating with new demo software: <https://www.youtube.com/watch?v=avJbvae7_Jc>.
 
 
 ### Access to programming main microcontroller
 
 See electrical schematic for reference.
-Main circuit board hardware supports programming via JTAG. The MCU JTAG-TAP (Test Access Port) pins are also used as general INPUT pins, but there are resistors installed separating MCU pins from rest of circuit. JTAG-TAP pins can be easily accessed via test/solder points on backside of main PCB. Programming via SPI can be enabled (via JTAG) and ICSP-SPI pins can also be accessed via test/solder points on backside of main PCB and SPI-SCK pin on side "extension connector". See annotated photos of main circuit board.
+Main circuit board hardware supports programming via JTAG. The MCU JTAG-TAP (Test Access Port) pins are also used as general INPUT pins, but there are resistors installed separating MCU pins from rest of circuit. JTAG-TAP pins can be easily accessed via test/solder points on backside of main PCB. Programming via SPI can be enabled (via JTAG) and ICSP-SPI pins can also be accessed via test/solder points on backside of main PCB and SPI-SCK pin on side "extension connector". See [annotated photos](https://github.com/ste-man/crouzet-xd26s-reverse-engineering/tree/main/reverse-engineering/ecad/pcb-reference-photos) of main circuit board.
 
 
 ### Crouzet XD26S ATmega128 startup sequence
@@ -83,6 +84,7 @@ The LCD controller seems to have 2 distinct "modes". Some messages are interpret
 | Byte 3: | Seems to be part of control message. | Functionality of bit 0..3 resembles Hitatchi HD44780U LCD controller. See image below.  |
 
 Correlation between Hitatchi HD44780U LCD controller and SPI packet byte 2 and 3 in CHARACTER mode:
+
 ![hd44780u-vs-lcd-spi-commnuication](reverse-engineering/communication-spi/lcd-info/hd44780u-table-6-modified/hd44780u_table-6-modified.svg)
 
 
@@ -111,7 +113,8 @@ After main MCU bootup, the first SPI message sent from MCU to LCD controller is 
 | 8 .. 71 | 5F \*\* \*\* | Send 64 packets of data. Each packet (3 bytes) contains 5 pixels for custom characters. 8 custom characters are created. See image below. |
 
 Crouzet XD26S CGRAM data (8 custom characters):
-![crouzet-xd26s-default-cgram](/reverse-engineering/communication-spi/lcd-info/cgram-lcd-characters/cg-characters.svg)
+
+![crouzet-xd26s-default-cgram](reverse-engineering/communication-spi/lcd-info/cgram-lcd-characters/cg-characters.svg)
 
 
 #### Crouzet XD26S Periodic communication with LCD
@@ -151,14 +154,19 @@ For example, see truth table below for **signal line status** of electrical sche
 | button "A" pressed | IDLE | ACTIVE | IDLE | IDLE   |
 | button "-" pressed | IDLE | IDLE   | IDLE | ACTIVE |
 
-See trace in image below. Note that image is composed of several traces with different time base. Pulse width is not accurate.
+See trace in image below. Note that image is composed of several traces with different time base so pulse width is not accurate.
 
-![trace-button-state-example](/reverse-engineering/communication-hmi-buttons/button-status-trace-overview.svg)
+![trace-button-state-example](reverse-engineering/communication-hmi-buttons/button-status-trace-overview.svg)
 
 
 ### "LCD RESET signal" LCD connector J2 PIN 9
 
 Signal state of "LCD RESET" is controlled by main MCU and seems to perform a partial reset of LCD controller. LCD controller turns off/resets if signal state is LOW during LCD operation and LCD must be re-initialized in order to function. Exact purpose and functionality of this signal is not yet understood. Signal state is HIGH (IDLE?) during normal operation. Main MCU is changing state of this signal during startup and when power supply Voltage is detected to be under a specific threshold.
+
+
+### Arduino LCD control demo
+
+A simple [Arduino sketch](arduino-lcd-control/crouzet-xd26s-lcd-demo/) has been created for demonstrating control of Crouzet XD26S LCD via SPI.
 
 
 # Support and contributions?
