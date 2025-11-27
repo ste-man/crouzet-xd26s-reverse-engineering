@@ -1,7 +1,7 @@
 
 # Introduction and history
 
-A Crouzet Millenium 3 XD26S (not the newer "SMART" version) PLC was left over from discontinued industrial equipment and given to me as a gift. The hardware seemed to be well designed and manufactured, it has a potent 4x18 character LCD display, 6 user interface buttons and a capable 8-bit ATMEL ATmega128-AU microcontroller so I decided to reverse engineer it in order to program the microcontroller directly instead of using the manufacturers automation software.
+A Crouzet Millenium 3 XD26S (not the newer "SMART" version) PLC was left over from discontinued industrial equipment and given to me as a gift. The hardware seemed to be well designed and manufactured, it has a potent 4x18 character LCD display, 6 user interface buttons and a capable 8-bit ATMEL ATmega128-AU microcontroller so I decided to reverse engineer the device in order to program the microcontroller directly instead of using the manufacturers automation software.
 
 
 ## TLDR, can this device be useful for my general hobby project?
@@ -13,19 +13,17 @@ Yes. The ATmega128 fuse bits on my device was by default set to e:0xff h:0x8a l:
 
 ## Electrical schematics
 
-Take a look at the reverse engineered electrical schematics for a good overview of device capabilities. Circuit board silkscreen is missing reference designators. New reference designators has been created by me. See related annotated photos for reference. Schematics are created with Kicad 9.0.** (<https://www.kicad.org/>).
+Take a look at the reverse engineered [electrical schematics](https://github.com/ste-man/crouzet-xd26s-reverse-engineering/blob/main/reverse-engineering/ecad/crouzet-xd26s-schematic/crouzet-xd26s_schematic.pdf) for a good overview of device capabilities. Min circuit board does not have silkscreen and is missing reference designators. New reference designators has been created by me. See related annotated photos of circuit board for reference. Electrical schematics have been created with Kicad 9.0.** (<https://www.kicad.org/>).
 
 
 ## Main circuit board microcontroller ("main MCU")
 
-The main circuit board has an 8-bit ATMEL ATmega128-AU microcontroller <https://www.microchip.com/en-us/product/atmega128>.
+The main circuit board has an 8-bit ATMEL ATmega128-AU microcontroller (<https://www.microchip.com/en-us/product/atmega128>).
 
 
 ### Program demo
 
 A simple demo program has been created in order to provide a very quick way of testing device hardware. A more serious solution would be to create a software library suitable for this device and more Crouzet devices in same model series with interface to display, buttons, I/O and real time clock etc. See video of device operating with new demo software: <https://www.youtube.com/watch?v=avJbvae7_Jc>.
-
-Feel free to contribute  :)
 
 
 ### Access to programming main microcontroller
@@ -84,8 +82,8 @@ The LCD controller seems to have 2 distinct "modes". Some messages are interpret
 | Byte 2: | If byte 1 = 0x5F: Bit 0..3 corresponds to selected segment to write at current position.<br>Otherwise: Part of control message. | Functionality of bit 0..3 resembles Hitatchi HD44780U LCD controller datasheet. See image below. |
 | Byte 3: | Seems to be part of control message. | Functionality of bit 0..3 resembles Hitatchi HD44780U LCD controller. See image below.  |
 
-Correlation between SPI packet byte 2 and 3 in CHARACTER mode:
-TODO: Image here
+Correlation between Hitatchi HD44780U LCD controller and SPI packet byte 2 and 3 in CHARACTER mode:
+![hd44780u-vs-lcd-spi-commnuication](reverse-engineering/communication-spi/lcd-info/hd44780u-table-6-modified)
 
 
 #### SPI control messages
