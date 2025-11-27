@@ -111,7 +111,7 @@ After main MCU bootup, the first SPI message sent from MCU to LCD controller is 
 | 8 .. 71 | 5F \*\* \*\* | Send 64 packets of data. Each packet (3 bytes) contains 5 pixels for custom characters. 8 custom characters are created. See image below. |
 
 Crouzet XD26S CGRAM data (8 custom characters):
-**TODO: image here**
+![crouzet-xd26s-default-cgram](/reverse-engineering/communication-spi/lcd-info/cgram-lcd-characters/cg-characters.svg)
 
 
 #### Crouzet XD26S Periodic communication with LCD
@@ -153,7 +153,7 @@ For example, see truth table below for **signal line status** of electrical sche
 
 See trace in image below. Note that image is composed of several traces with different time base. Pulse width is not accurate.
 
-**TODO: SCREENSHOT FROM PICOSCOPE HERE WITH BUTTON PRESSES.**
+![trace-button-state-example](/reverse-engineering/communication-hmi-buttons/button-status-trace-overview.svg)
 
 
 ### "LCD RESET signal" LCD connector J2 PIN 9
